@@ -1,0 +1,29 @@
+wikipedia:
+  type: web
+  title: PageRank
+  url: https://en.wikipedia.org/wiki/PageRank
+
+local-partition:
+  type: article
+  title: Detecting sharp drops in PageRank and a simplified local partitioning algorithm
+  author:
+    - Reid Andersen
+    - Fan Chung
+  parent:
+    type: proceedings
+    title: International Conference on Theory and Applications of Models of Computation
+    year: 2007
+    publisher: Springer
+
+andersen2006local:
+  type: article
+  title: Local graph partitioning using pagerank vectors
+  author:
+    - Reid Andersen
+    - Fan Chung
+    - Kevin Lang
+  parent:
+    type: proceedings
+    title: 47th annual IEEE symposium on foundations of computer science (FOCS'06)
+    year: 2006
+    publisher: IEEE
