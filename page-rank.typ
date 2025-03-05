@@ -17,7 +17,7 @@
 #set heading(numbering: "1.1.")
 
 #set document(
-  title: [PageRank],
+  title: [PageRank 和 Graph Expander],
   author: "陶大",
 )
 
@@ -32,17 +32,41 @@
 
 = Theory
 
-== Prelimiaries
+== Graph Expander & Conductance
 
 #let Vol = [$op("Vol")$]
 
-给定一个无向图 $G=(V, E)$和一个节点子集 $S$。
-我们定义
-- 容量：$Vol(S) = sum_(v in S) d(v)$，其中 $d(v)$ 是 $v$ 的度。
-- 割：$e(S, V without S)=|{(i,j) in E | i in S, j in V minus S}|$
-- Conductance:
-  $ Phi(S) = e(S, V minus S) / (min{Vol(S), Vol(V) - Vol(S)}) $
-- $arrow(p)(S) = sum_(v in S) arrow(p)(v)$，其中 $arrow(p)$ 是 $V$ 上的概率分布。
+#definition[
+  给定一个无向图 $G=(V, E)$和一个节点子集 $S$。
+  我们定义
+  - 容量：$Vol(S) = sum_(v in S) d(v)$，其中 $d(v)$ 是 $v$ 的度。
+  - 割：$partial S={(u,v) in E | u in S, v in.not S}$
+]
+
+#definition("Edge Expansion")[
+  给定一个无向图 $G=(V, E)$。
+  我们定义其 *奇格常数* (*Cheeger constant*) 或 *等周数* (*isoperimetric number*)：
+  $
+    h(G) = min_(emptyset != S subset V) (partial S) / (min{|S|, |V without S|})
+  $
+  使得 $h(dot.c)$ 取到最小值的 $S$ 被称为一个(edge) expander。
+]
+
+Expander试图找出一个高内聚且与外部低耦合的一个子图。
+不同的“内聚”和“耦合”的定义可以得出（稍稍）不同的子图。
+常见者，除了这里给出的 edge expansion、还有 vertex expansion 和 spectral expansion。
+
+#definition("Conductance")[
+  给定一个无向图 $G=(V, E)$。
+  我们定义其传导性 (conductance) 为
+  $
+    Phi(S) &= (partial S) / (min{Vol(S), Vol(V without S)})\
+    Phi(G) &= min_(emptyset != S subset V) Phi(S)
+  $
+]
+
+Conductance 起源于 Mark Jerrum 和 Alistair Sinclair 在1988年对随机游走的研究。
+Conductance 不仅在形式上和奇格常数非常相似，它们在直观上也是相同的。
 
 == Page Rank
 
@@ -58,13 +82,15 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
 其中
 - $arrow(p)$ 是各点page rank所构成的向量。
   $arrow(p)$ 是 $arrow(s)$ 和 $alpha$的函数，因此也可以写成 $pr (alpha, arrow(s))$。
-- $arrow(s)$ 是起点的概率分布。
+- $arrow(s)$ 是起点的概率密度。
 - $W$ 是图 $G$ 的概率矩阵，即，$W_(u v)$ 表示若当前处于 $u$，则下一步走到 $v$ 的概率。
   显然，
   $ cases(
     sum_u W_(u v) = 1 quad forall v in V,
     (u,v) in.not E arrow.r.double W_(u v) = 0,
   ) $
+
+我们简记 $f(S)=sum_(v in S) f(v)$ 若 $f(dot.c)$ 是任意定义在节点上的函数且 $S$ 是任意节点子集。
 
 直观来讲，$arrow(p)$ 描述了这么一个过程的结果：
 若以 $arrow(s)$ 为概率选择一个起点，以 $W$ 为概率在图中随机游走。
@@ -88,7 +114,7 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
 #proposition[
   对于任意衰退系数 $alpha in (0, 1]$，都存在矩阵 $R_alpha$，使得
   $ pr (alpha, arrow(s)) = R_alpha arrow(s) $
-]
+]<linear-transformation>
 
 #definition[
   我们称 $arrow(p)$ 是 $pr(alpha, arrow(s))$ 的一个近似，如果存在 $arrow(r)$，使得
@@ -101,6 +127,9 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
 
   我们记 $apr(alpha, arrow(s), arrow(r)) = pr(alpha, arrow(s)) - pr(alpha, arrow(r))$。
 ]
+
+由 @linear-transformation 可知，$apr(alpha, arrow(s), arrow(r))=pr(alpha, arrow(s) - arrow(r))$，
+如果我们忽略 $arrow(s) - arrow(r)$ 可能不是一个概率密度函数的话。
 
 #theorem[
   设 $arrow(p)=apr(alpha, arrow(s), arrow(r))$ 是一个近似PageRank。
@@ -168,7 +197,7 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
   令 $phi.alt in (0, 1)$ 是任意常数。
   若 $arrow(p)$ 是一个（近似）PageRank且 $q, pi$ 分别是其导出排序函数和序。
   则对于任意前缀 $S_j$ ，
-  或者满足 $e(S_j, V minus S_j) < 2 phi.alt Vol(S_j)$，
+  或者满足 $E(S_j, V without S_j) < 2 phi.alt Vol(S_j)$，
   或者存在 $k>j$ 使得
   $ cases(
     Vol (S_k) gt.eq.slant (1 + phi.alt) Vol(S_j),
