@@ -171,7 +171,7 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
   let $arrow(p)' = arrow(p)$\
   let $arrow(r)' = arrow(r)$\
   let $arrow(p)'(u) = arrow(p)(u) + alpha arrow(r)(u)$\
-  let $arrow(r)'(u) = (1 - alpha) arrow(r)(u) / 2$\
+  let $arrow(r)'(u) = (1 - alpha) / 2 arrow(r)(u) $\
   for each $v$ s.t. $(u,v) in E$:#i\
     let $arrow(r)'(v) = arrow(r)(v) + (1 - alpha) / (2 d(u)) arrow(r)(u)$ #d\
   return $arrow(p)'$, $arrow(r)'$
