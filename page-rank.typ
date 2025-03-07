@@ -47,7 +47,7 @@
   给定一个无向图 $G=(V, E)$。
   我们定义其 *奇格常数* (*Cheeger constant*) 或 *等周数* (*isoperimetric number*)：
   $
-    h(G) = min_(emptyset != S subset V) (partial S) / (min{|S|, |V without S|})
+    h(G) = min_(emptyset != S subset V) (|partial S|) / (min{|S|, |V without S|})
   $
   使得 $h(dot.c)$ 取到最小值的 $S$ 被称为一个(edge) expander。
 ]
@@ -60,7 +60,7 @@ Expander试图找出一个高内聚且与外部低耦合的一个子图。
   给定一个无向图 $G=(V, E)$。
   我们定义其传导性 (conductance) 为
   $
-    Phi(S) &= (partial S) / (min{Vol(S), Vol(V without S)})\
+    Phi(S) &= (|partial S|) / (min{Vol(S), Vol(V without S)})\
     Phi(G) &= min_(emptyset != S subset V) Phi(S)
   $
 ]
@@ -187,7 +187,7 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
 
 #definition[
   令 $arrow(p)$ 是一个PageRank。
-  我们定义排序函数(ranking function) $q(u)=arrow(p)(u) / d(u), forall u in V$，
+  我们定义排序函数(ranking function) $q(u)=(arrow(p)(u)) / d(u), forall u in V$，
   以及其对应的降序 $pi$，即
   $ q(pi(1)) gt.eq.slant q(pi(2)) gt.eq.slant dots gt.eq.slant q(pi(|V|)) $
   对应此序，我们定义其前缀 $S_j={pi(1), pi(2), dots, pi(j)}$。
@@ -236,13 +236,13 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
   let $epsilon = 1 / (2 gamma x)$\
   let $arrow(p)$ #sym.arrow.l #smallcaps[ApproximatePageRank] ($v$)\
   按照导出的排序函数 $q$ 重新排序节点，得到序 $pi$\
-  let $k$ #sym.arrow.l the largest index $i$ st. $q(pi(i)) gt.eq.slant 1/ (2 gamma Vol(pi(i)))$#i\
+  let $k$ #sym.arrow.l the largest index $i$ st. $q(pi(i)) gt.eq.slant 1/ (2 gamma Vol(S_i))$#i\
     if no such $k$, halt and output "FAIL: NO STARTING INDEX" #d\
   repeat#i\
-    if $(1 + phi.alt) Vol(pi(k)) > Vol(V)$ or $Vol(pi(k)) > Vol(sup(arrow(p)))$#i\
+    if $(1 + phi.alt) Vol(S_k) > Vol(V)$ or $Vol(S_k) > Vol(sup(arrow(p)))$#i\
       output "FAIL NO CUT FOUND" and quit with $S_k$#d\
-    let $k'$ #sym.arrow.l the smallest index $i$ st. $Vol(pi(i)) gt.eq.slant (1+phi.alt)Vol(pi(k))$\
-    if $alpha / (phi.alt Vol(pi(k))) lt.eq.slant q(pi(k)) - q(pi(k'))$#i\
+    let $k'$ #sym.arrow.l the smallest index $i$ st. $Vol(S_i) gt.eq.slant (1+phi.alt)Vol(S_k)$\
+    if $alpha / (phi.alt Vol(S_k)) lt.eq.slant q(pi(k)) - q(pi(k'))$#i\
       quit with $S_k$#d\
     let $k$ #sym.arrow.l $k'$
 ]
