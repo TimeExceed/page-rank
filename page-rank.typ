@@ -197,7 +197,7 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
   令 $phi.alt in (0, 1)$ 是任意常数。
   若 $arrow(p)$ 是一个（近似）PageRank且 $q, pi$ 分别是其导出排序函数和序。
   则对于任意前缀 $S_j$ ，
-  或者满足 $E(S_j, V without S_j) < 2 phi.alt Vol(S_j)$，
+  或者满足 $partial S_j < 2 phi.alt Vol(S_j)$，
   或者存在 $k>j$ 使得
   $ cases(
     Vol (S_k) gt.eq.slant (1 + phi.alt) Vol(S_j),
@@ -219,7 +219,7 @@ $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
   那么对于任意 $i in pi$，存在 $i' in pi'$，使得
   $
     epsilon &gt.eq.slant q(i) - q'(i')\
-    Vol(S_(i')) &gt.eq.slant Vol(S_i)
+    Vol(S'_(i')) &gt.eq.slant Vol(S_i)
   $
 ]
 
