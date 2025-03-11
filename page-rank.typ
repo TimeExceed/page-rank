@@ -74,7 +74,8 @@ Conductance 不仅在形式上和奇格常数非常相似，它们在直观上�
 #let apr = [$op("apr")$]
 
 设有一个有向图 $G=(V,E)$。
-给定一个点上的概率密度 $arrow(s)$ 和衰退系数(damping factor) $alpha in (0,1]$，
+给定一个点上的概率密度 $arrow(s)$ 和衰退系数(damping factor) $delta in (0,1]$。
+为了与论文一致，我们定义$alpha=1 - delta$。
 那么其每个点的page rank定义为如下不动点：
 
 $ arrow(p) = alpha arrow(s) + (1 - alpha) W arrow(p) $
